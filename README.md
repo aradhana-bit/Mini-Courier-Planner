@@ -1,54 +1,106 @@
 # Mini-Courier Planner
 
 <p align="center">
-  A Python-based courier delivery optimization system implementing sorting, dynamic programming, graph algorithms, and approximation algorithms.
+  <img src="https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/DAA-Capstone-orange?style=for-the-badge" alt="DAA Capstone">
+  <img src="https://img.shields.io/badge/Algorithms-4-blueviolet?style=for-the-badge" alt="Algorithms">
+  <img src="https://img.shields.io/badge/Dependencies-None-success?style=for-the-badge" alt="Dependencies">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.9%2B-blue?logo=python" alt="Python">
-  <img src="https://img.shields.io/badge/Algorithms-DAA-orange" alt="Algorithms">
-  <img src="https://img.shields.io/badge/Testing-Unittest-green" alt="Testing">
-  <img src="https://img.shields.io/badge/Dependencies-Standard%20Library-lightgrey" alt="Dependencies">
+  <strong>An Algorithm-Driven Courier Delivery Planning and Optimization System</strong>
+  <br>
+  Integrating Sorting, Dynamic Programming, Graph Algorithms and Approximation Techniques.
+</p>
+
+<p align="center">
+  <a href="#overview">Overview</a> •
+  <a href="#features">Features</a> •
+  <a href="#algorithms">Algorithms</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#execution">Execution</a> •
+  <a href="#testing">Testing</a> •
+  <a href="#documentation">Documentation</a>
 </p>
 
 ---
 
 ## Overview
 
-Mini-Courier Planner is a Python application developed to demonstrate the practical implementation of Design and Analysis of Algorithms (DAA) through a courier delivery optimization problem.
+**Mini-Courier Planner** is a Python-based application developed to demonstrate the practical application of Design and Analysis of Algorithms (DAA) through a simplified courier delivery optimization problem.
 
-The application processes parcel information, vehicle capacity, and a weighted road network to generate an optimized parcel selection and delivery route.
+The system processes parcel information, vehicle weight capacity and a weighted road network to generate a delivery plan. It combines multiple algorithmic approaches to prioritize parcels, select a valuable combination of packages, calculate shortest paths and construct an approximate delivery tour.
 
-It combines multiple algorithmic techniques to prioritize parcels, maximize delivery value, calculate shortest paths, and construct an approximate delivery tour.
+The project demonstrates how different algorithmic techniques can work together to solve a real-world-inspired optimization problem.
 
-## Key Features
+## Features
 
-- **Parcel Prioritization:** Sorts parcels based on priority, delivery deadline, and parcel ID.
-- **0/1 Knapsack Optimization:** Selects the most valuable combination of parcels within the vehicle's weight capacity.
-- **Graph Representation:** Models the road network using a weighted, undirected graph.
-- **Shortest Path Calculation:** Implements Dijkstra's algorithm to determine shortest paths from the depot.
-- **Delivery Route Optimization:** Uses the nearest-neighbor TSP heuristic to construct a delivery tour.
-- **Performance Benchmarking:** Evaluates sorting, knapsack dynamic programming, and Dijkstra's algorithm across increasing input sizes.
-- **CSV Data Processing:** Reads parcel and road network information from structured CSV files.
-- **Automated Testing:** Includes unit tests to verify the correctness of core algorithms.
+- **Intelligent Parcel Prioritization:** Organizes parcels by descending priority, earliest deadline and parcel ID.
+- **Optimal Package Selection:** Uses 0/1 Knapsack Dynamic Programming to maximize parcel value within vehicle capacity.
+- **Weighted Graph Modeling:** Represents the road network using an undirected adjacency-list graph.
+- **Shortest Path Computation:** Implements Dijkstra's algorithm with a priority queue.
+- **Approximate Route Planning:** Uses the Nearest-Neighbor TSP heuristic to visit selected destinations and return to the depot.
+- **Performance Benchmarking:** Measures sorting, knapsack and Dijkstra execution times across different input sizes.
+- **CSV-Based Input:** Processes parcel and road network datasets through CSV files.
+- **Automated Unit Testing:** Validates the core algorithms and delivery route behavior.
+- **Report Generation:** Saves the generated delivery plan and benchmark results in the output directory.
+
+## Algorithms
+
+| Algorithm | Application | Time Complexity |
+|---|---|---|
+| Comparison Sorting | Parcel prioritization | O(n log n) |
+| 0/1 Knapsack DP | Capacity-constrained parcel selection | O(nW) |
+| Dijkstra's Algorithm | Shortest path calculation | O((V + E) log V) |
+| Nearest-Neighbor TSP | Approximate delivery tour | O((k + 1)(V + E) log V) |
+
+### Algorithmic Implementation
+
+**1. Comparison Sorting**
+
+Parcels are sorted using three criteria:
+- Higher priority first.
+- Earlier delivery deadline first.
+- Parcel ID in ascending order for deterministic tie-breaking.
+
+**2. 0/1 Knapsack Dynamic Programming**
+
+The algorithm selects a combination of parcels that maximizes their total value without exceeding the vehicle's weight capacity. Each parcel is either selected completely or excluded.
+
+**3. Dijkstra's Shortest Path Algorithm**
+
+The road network is represented as a weighted, undirected graph. Dijkstra's algorithm calculates the shortest distances from the depot using a min-priority queue.
+
+**4. Nearest-Neighbor TSP Heuristic**
+
+The system repeatedly selects the nearest unvisited delivery destination using shortest-path distances. After visiting all selected destinations, it returns to the depot.
+
+This is a heuristic approach and does not guarantee the globally optimal Traveling Salesperson Problem solution.
+
+**5. Performance Benchmarking**
+
+The benchmark module measures execution times for sorting, knapsack dynamic programming and Dijkstra's algorithm. Results are stored in CSV format for further analysis.
 
 ## Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| Python 3.9+ | Application development |
-| Python Standard Library | Core functionality and utilities |
-| CSV | Input data management |
-| Heap Queue (`heapq`) | Priority queue for Dijkstra's algorithm |
+| Python 3.9+ | Core application development |
+| `heapq` | Priority queue implementation |
+| `csv` | Dataset processing |
+| `dataclasses` | Structured parcel representation |
+| `argparse` | Command-line configuration |
+| `pathlib` | File and directory handling |
 | `unittest` | Automated testing |
-| Dynamic Programming | Parcel selection optimization |
-| Graph Algorithms | Shortest path calculation |
-| Approximation Algorithms | Delivery route construction |
 
-## Application Structure
+**External Dependencies:** None. The application uses Python's standard library.
+
+## Project Architecture
+
+The application follows a modular structure that separates algorithm implementation, data processing, planning logic, benchmarking and testing.
 
 ```text
-mini_courier_planner/
+Mini-Courier-Planner/
 │
 ├── courier_planner/
 │   ├── __init__.py
@@ -64,16 +116,21 @@ mini_courier_planner/
 │   └── roads.csv
 │
 ├── outputs/
+│   ├── delivery_plan.txt
+│   └── benchmark_results.csv
 │
 ├── tests/
 │   └── test_algorithms.py
 │
+├── Mini-Courier-Planner-Report.pdf
+├── PROJECT_REPORT.md
 ├── README.md
-├── requirements.txt
-└── PROJECT_REPORT.md
+└── requirements.txt
 ```
 
-## Getting Started
+*Note: The files inside `outputs/` are generated when the application runs.*
+
+## Installation
 
 ### Prerequisites
 
@@ -81,22 +138,29 @@ mini_courier_planner/
 - Git
 - Visual Studio Code (recommended)
 
-No third-party Python packages are required.
-
-### Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/aradhana-bit/Mini-Courier-Planner.git
+```
+
+### 2. Navigate to the Project Directory
+
+```bash
 cd Mini-Courier-Planner
 ```
 
-### Verify Python Installation
+### 3. Verify Python Installation
 
 ```bash
 python --version
 ```
 
-### Run the Application
+No additional package installation is necessary.
+
+## Execution
+
+### Run the Delivery Planner
 
 ```bash
 python -m courier_planner.main
@@ -108,85 +172,147 @@ python -m courier_planner.main
 python -m courier_planner.main --benchmark
 ```
 
-### Run with Custom Vehicle Capacity
+### Specify Vehicle Capacity
 
 ```bash
-python -m courier_planner.main --capacity 30 --benchmark
+python -m courier_planner.main --capacity 30
 ```
 
-### Run Unit Tests
+### Specify Custom Input Files
+
+```bash
+python -m courier_planner.main --parcels data/parcels.csv --roads data/roads.csv
+```
+
+### Specify a Different Depot
+
+```bash
+python -m courier_planner.main --depot DEPOT
+```
+
+### Combine Configuration Options
+
+```bash
+python -m courier_planner.main --capacity 30 --depot DEPOT --benchmark
+```
+
+### Command-Line Arguments
+
+| Argument | Description | Default |
+|---|---|---|
+| `--parcels` | Path to parcel CSV file | `data/parcels.csv` |
+| `--roads` | Path to road network CSV file | `data/roads.csv` |
+| `--depot` | Starting and ending depot node | `DEPOT` |
+| `--capacity` | Maximum vehicle weight capacity | `25` |
+| `--benchmark` | Enables performance benchmarking | Disabled |
+
+## Input Data
+
+The application uses two CSV files stored inside the `data/` directory.
+
+### Parcel Dataset — `parcels.csv`
+
+| Field | Description |
+|---|---|
+| `parcel_id` | Unique parcel identifier |
+| `destination` | Delivery destination node |
+| `weight` | Parcel weight in kilograms |
+| `priority` | Parcel urgency score |
+| `deadline` | Delivery deadline in `YYYY-MM-DD HH:MM` format |
+| `value` | Parcel value used by the Knapsack algorithm |
+
+### Road Network — `roads.csv`
+
+| Field | Description |
+|---|---|
+| `from` | Starting graph node |
+| `to` | Connected graph node |
+| `distance` | Distance or travel cost between nodes |
+
+Road connections are treated as bidirectional and must have non-negative distances.
+
+## Output
+
+The application generates its results inside the `outputs/` directory.
+
+| Output File | Description |
+|---|---|
+| `delivery_plan.txt` | Prioritized parcels, selected packages, shortest-path distances and delivery tour |
+| `benchmark_results.csv` | Execution-time measurements for the selected algorithms |
+
+The delivery plan includes:
+- Prioritized parcel queue.
+- Selected parcels and total selected weight.
+- Maximum selected parcel value.
+- Shortest-path distances from the depot.
+- Approximate delivery visit order.
+- Expanded road path and total tour distance.
+
+## Testing
+
+The project includes automated unit tests for the core algorithmic components.
+
+### Execute the Test Suite
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-## Algorithms Implemented
+### Testing Coverage
 
-| Algorithm | Application | Time Complexity |
-|---|---|---|
-| Comparison Sorting | Parcel prioritization | O(n log n) |
-| 0/1 Knapsack DP | Parcel selection | O(nW) |
-| Dijkstra's Algorithm | Shortest path calculation | O((V+E) log V) |
-| Nearest-Neighbor TSP | Approximate delivery tour | O(k(V+E) log V) |
+- Parcel prioritization and sorting order.
+- Knapsack capacity constraints and maximum value.
+- Dijkstra shortest distances and path reconstruction.
+- Delivery tour construction and depot return.
 
-### Algorithmic Concepts
+## Performance Analysis
 
-**1. Sorting Algorithms**
+The benchmarking module evaluates algorithm execution time across increasing parcel counts.
 
-Parcels are prioritized using comparison-based sorting according to priority, deadline, and parcel ID.
-
-**2. Dynamic Programming**
-
-The 0/1 Knapsack algorithm determines the combination of parcels that maximizes total value without exceeding vehicle capacity.
-
-**3. Graph Algorithms**
-
-The road network is represented as a weighted, undirected graph. Dijkstra's algorithm calculates shortest paths from the depot.
-
-**4. Approximation Algorithms**
-
-The nearest-neighbor heuristic constructs an approximate Traveling Salesperson Problem (TSP) tour, including the return journey to the depot. It does not guarantee a globally optimal route.
-
-**5. Performance Analysis**
-
-Benchmarking evaluates the execution time of selected algorithms across increasing input sizes to demonstrate their computational behavior.
-
-## Output Files
-
-The application generates its output inside the `outputs/` directory.
-
-| File | Description |
+| Algorithm | Benchmark Objective |
 |---|---|
-| `delivery_plan.txt` | Generated parcel selection and delivery plan |
-| `benchmark_results.csv` | Performance benchmarking results |
+| Sorting | Evaluate parcel prioritization performance |
+| Knapsack DP | Measure dynamic programming execution time |
+| Dijkstra | Measure shortest-path computation time |
 
-These files are generated when the corresponding application modes are executed.
+Benchmark measurements depend on the computer, operating system and Python environment. Use the generated CSV file for performance charts and academic analysis.
 
-## Project Objectives
+## Limitations
 
-- Apply theoretical DAA concepts to a practical optimization problem.
-- Understand sorting and dynamic programming through implementation.
-- Explore weighted graphs and shortest path algorithms.
-- Demonstrate approximation techniques for route planning.
-- Analyze algorithmic performance through benchmarking.
-- Develop modular and maintainable Python code.
+- Road distances are illustrative sample values, not live GPS or map data.
+- The application plans deliveries for a single vehicle.
+- Traffic conditions and delivery time windows are not considered.
+- Knapsack optimization uses integer weight capacity.
+- The Nearest-Neighbor heuristic does not guarantee an optimal TSP route.
 
-## Purpose
+## Future Scope
 
-This project was developed as an academic capstone project for the Design and Analysis of Algorithms (DAA) course.
+- Integration with real-world mapping and navigation APIs.
+- Live traffic and distance estimation.
+- Multiple vehicle and route optimization.
+- Delivery time-window constraints.
+- Comparison of route heuristics such as 2-opt.
+- Graphical user interface and interactive route visualization.
 
-It demonstrates how fundamental algorithmic techniques can be combined to address a simplified courier delivery optimization problem.
+## Documentation
 
-**Note:** The road distances are illustrative sample values and do not represent live geographical or GPS-based distances.
+The repository includes additional project documentation:
+
+- [Project Report (PDF)](Mini-Courier-Planner-Report.pdf)
+- [Detailed Project Report (Markdown)](PROJECT_REPORT.md)
+
+## Academic Context
+
+This project was developed as a **Design and Analysis of Algorithms (DAA) Capstone Project** to demonstrate the integration of fundamental algorithmic techniques into a practical optimization workflow.
+
+It provides an implementation-focused study of sorting, dynamic programming, graph traversal, shortest-path computation, approximation algorithms and performance analysis.
 
 ---
-
-<p align="center">
-  Developed as a Design and Analysis of Algorithms Capstone Project.
-</p>
 
 <p align="center">
   <strong>Mini-Courier Planner</strong>
   <br>
   Algorithmic Thinking. Optimized Deliveries.
+  <br><br>
+  Developed as a DAA Capstone Project.
 </p>
